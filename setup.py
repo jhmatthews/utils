@@ -89,7 +89,12 @@ if len(sys.argv) < 2:
 
 else:
 	if sys.argv[1] == "install":
+		print "Python"
+		print py_ex[2:]
 		script_prepender()
+
+		print "Path"
+		print path_string
 		path_appender()
 
 	elif sys.argv[1] == "clean":
