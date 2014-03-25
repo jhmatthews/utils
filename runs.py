@@ -1,7 +1,3 @@
-/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python
-py_ex
-py_ex
-/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python
 '''
 Script to create daddy script and individual script for iridis runs
 
@@ -26,14 +22,12 @@ for line in ls_file:
 
 
 daddy = open ("daddy_script", "w") 
-daddy.write("#!/bin/bash\n\n")
 
 for i in range(len(pf_files)):
 	
 	scriptname = "script%i_%s" % ( i, pf_files[i][:-3])
 	script = open (scriptname, "w")
 
-	script.write("#!/bin/bash\n\n")
 	script.write("module load mpirun/1.6.4/intel_of2\n\n")
 
 	command = "cd %s\n" % dir
@@ -53,51 +47,6 @@ for i in range(len(pf_files)):
 
 	daddy.write("qsub -l nodes=%i:ppn=%i -l walltime=%s %s\n" % (nodes, ppn, walltime, scriptname))
 	print "qsub -l nodes=%i:ppn=%i -l walltime = %s\n" % (nodes, ppn, walltime)
-
-	script.close()
-
-
-
-daddy.close()
-
-
-os.system ("chmod +x daddy_script")
-print "all done"
-alltime, scriptname))
-	print "qsub -l nodes=%i:ppn=%i -l walltime = %s\n" % (nodes, ppn, walltime)
-
-	script.close()
-
-
-
-daddy.close()
-
-
-os.system ("chmod +x daddy_script")
-print "all done"
-ime)
-
-	script.close()
-
-
-
-daddy.close()
-
-
-os.system ("chmod +x daddy_script")
-print "all done"
-ime)
-
-	script.close()
-
-
-
-daddy.close()
-
-
-os.system ("chmod +x daddy_script")
-print "all done"
-ime)
 
 	script.close()
 

@@ -8,7 +8,7 @@ dependencies = ["util.py", \
 
 import sys, os
 
-py_ex = "#"+sys.executable
+py_ex = "#!"+sys.executable
 
 cdir = os.getcwd()
 
@@ -28,7 +28,8 @@ def script_prepender():
 	        content = f.read()
 	        f.seek(0,0)
 	        f.write(py_ex + '\n' + content)
-	        print 'py_ex' + '\n' + content
+
+		os.system("chmod +x %s" % filename)
 
 	return 0
 
@@ -37,7 +38,7 @@ def path_appender():
     with open(home+"/.bash_profile",'a') as f:
         f.write(path_string)
 
-	os.system("source "+home+"/.bash_profile")
+	os.system("source " + home + "/.bash_profile")
 
 	return 0
 
@@ -54,7 +55,8 @@ def script_clean():
 		f.seek(0,0)
 
 		for line in temp:
-			if py_ex not in line:
+			if "#!" not in line:
+				print line
 				f.write(line)
 
 	return 0
@@ -91,5 +93,6 @@ else:
 		path_appender()
 
 	elif sys.argv[1] == "clean":
-		script_clean()
-		path_clean()
+		"print Can't clean, won't clean"
+		#script_clean()
+		#path_clean()

@@ -29,4 +29,10 @@ def strip(character, string):
     return new_string for s in string:
         if s != character:
             new_string += s
+    return new_stringg for s in string:
+        if s != character:
+            new_string += s
+    return new_stringg for s in string:
+        if s != character:
+            new_string += s
     return new_string
