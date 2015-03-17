@@ -12,6 +12,10 @@ ncores = sys.argv[2]
 walltime = sys.argv[3]
 
 vers = sys.argv[4]
+vers_sep = False
+if vers == "-v":
+	print "running separate versions on separate files- two column ls file"
+	vers_sep = True
 
 dir = os.getcwd()
 
@@ -20,14 +24,18 @@ pf_files = []
 for line in ls_file:
 	data = line.split()[0]
 	pf_files.append(data)
+	if vers_sep:
+		v = line.split()[1]
+		vlist.append(v)
+	
 
 restart = False
 if len(sys.argv) > 5:
 	if sys.argv[5] == "-r":
 		restart = True
 
-
-daddy = open ("daddy_script", "w") 
+scriptname = "submit_%s" % ls_filename
+daddy = open (scriptname, "w") 
 
 for i in range(len(pf_files)):
 	
@@ -40,10 +48,15 @@ for i in range(len(pf_files)):
 
 	script.write(command)
 	
-	if restart:
-		command = "mpirun -n %s /home/jm8g08/Python/bin/py%s -r %s > %s.out &\n" % (ncores, vers, pf_files[i][:-3], pf_files[i][:-3])
+	if vers_sep:
+		version = v[i]
 	else:
-		command = "mpirun -n %s /home/jm8g08/Python/bin/py%s %s > %s.out &\n" % (ncores, vers, pf_files[i][:-3], pf_files[i][:-3])
+		version = vers
+	
+	if restart:
+		command = "mpirun -n %s /home/jm8g08/Python/bin/py%s -r %s > %s.out &\n" % (ncores, version, pf_files[i][:-3], pf_files[i][:-3])
+	else:
+		command = "mpirun -n %s /home/jm8g08/Python/bin/py%s %s > %s.out &\n" % (ncores, version, pf_files[i][:-3], pf_files[i][:-3])
 
 	print command
 
@@ -64,5 +77,5 @@ for i in range(len(pf_files)):
 daddy.close()
 
 
-os.system ("chmod +x daddy_script")
+os.system ("chmod +x %s" % scriptname)
 print "all done"
