@@ -1,10 +1,11 @@
+#!/usr/bin/python
 '''
 edfile.py replaces 
 '''
 
 import os, sys
 import util
-
+import numpy as np
 
 mode = sys.argv[1]
 ls_filename = sys.argv[2]

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 '''
 MEGA USEFUL GENERAL PURPOSE STUFF
 '''

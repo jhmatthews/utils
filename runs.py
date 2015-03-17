@@ -1,3 +1,4 @@
+#!/usr/bin/python
 '''
 Script to create daddy script and individual script for iridis runs
 
@@ -20,6 +21,11 @@ for line in ls_file:
 	data = line.split()[0]
 	pf_files.append(data)
 
+restart = False
+if len(sys.argv) > 5:
+	if sys.argv[5] == "-r":
+		restart = True
+
 
 daddy = open ("daddy_script", "w") 
 
@@ -28,13 +34,16 @@ for i in range(len(pf_files)):
 	scriptname = "script%i_%s" % ( i, pf_files[i][:-3])
 	script = open (scriptname, "w")
 
-	script.write("module load mpirun/1.6.4/intel_of2\n\n")
+	script.write("module load openmpi/1.6.4/intel_of2\n\n")
 
 	command = "cd %s\n" % dir
 
 	script.write(command)
-
-	command = "mpirun -n %s /home/jm8g08/Python/bin/py%s %s > %s.out &\n" % (ncores, vers, pf_files[i][:-3], pf_files[i][:-3])
+	
+	if restart:
+		command = "mpirun -n %s /home/jm8g08/Python/bin/py%s -r %s > %s.out &\n" % (ncores, vers, pf_files[i][:-3], pf_files[i][:-3])
+	else:
+		command = "mpirun -n %s /home/jm8g08/Python/bin/py%s %s > %s.out &\n" % (ncores, vers, pf_files[i][:-3], pf_files[i][:-3])
 
 	print command
 
