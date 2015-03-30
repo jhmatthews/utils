@@ -19,14 +19,17 @@ if vers == "-v":
 
 dir = os.getcwd()
 
+vlist = []
 ls_file = open(ls_filename, "r")
 pf_files = []
 for line in ls_file:
-	data = line.split()[0]
-	pf_files.append(data)
 	if vers_sep:
-		v = line.split()[1]
-		vlist.append(v)
+		data = line.split()[1]
+		v = line.split()[0]
+                vlist.append(v)	
+	else:
+		data = line.split()[0]
+	pf_files.append(data)
 	
 
 restart = False
@@ -34,8 +37,8 @@ if len(sys.argv) > 5:
 	if sys.argv[5] == "-r":
 		restart = True
 
-scriptname = "submit_%s" % ls_filename
-daddy = open (scriptname, "w") 
+submit_name = "submit_%s" % ls_filename
+daddy = open (submit_name, "w") 
 
 for i in range(len(pf_files)):
 	
@@ -49,7 +52,7 @@ for i in range(len(pf_files)):
 	script.write(command)
 	
 	if vers_sep:
-		version = v[i]
+		version = vlist[i]
 	else:
 		version = vers
 	
@@ -77,5 +80,5 @@ for i in range(len(pf_files)):
 daddy.close()
 
 
-os.system ("chmod +x %s" % scriptname)
+os.system ("chmod +x %s" % submit_name)
 print "all done"
