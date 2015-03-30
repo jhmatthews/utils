@@ -4,6 +4,11 @@ Script to create daddy script and individual script for iridis runs
 
 '''
 import os, sys
+import platform
+
+node = platform.node()
+
+PYTHON = os.environ["PYTHON"]
 
 ls_filename = sys.argv[1]
 
@@ -42,7 +47,10 @@ for i in range(len(pf_files)):
 	scriptname = "script%i_%s" % ( i, pf_files[i][:-3])
 	script = open (scriptname, "w")
 
-	script.write("module load openmpi/1.6.4/intel_of2\n\n")
+	if "sciama" in node:
+		script.write("module load mpi/openmpi/1.4.3/gcc-4.4.7\n\n")
+	else:
+		script.write("module load openmpi/1.6.4/intel_of2\n\n")
 
 	command = "cd %s\n" % dir
 
@@ -54,9 +62,9 @@ for i in range(len(pf_files)):
 		version = vers
 	
 	if restart:
-		command = "mpirun -n %s /home/jm8g08/Python/bin/py%s -r %s > %s.out &\n" % (ncores, version, pf_files[i][:-3], pf_files[i][:-3])
+		command = "mpirun -n %s %s/bin/py%s -r %s > %s.out &\n" % (ncores, PYTHON, version, pf_files[i][:-3], pf_files[i][:-3])
 	else:
-		command = "mpirun -n %s /home/jm8g08/Python/bin/py%s %s > %s.out &\n" % (ncores, version, pf_files[i][:-3], pf_files[i][:-3])
+		command = "mpirun -n %s %s/bin/py%s %s > %s.out &\n" % (ncores, PYTHON, version, pf_files[i][:-3], pf_files[i][:-3])
 
 	print command
 
