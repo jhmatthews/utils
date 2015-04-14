@@ -49,11 +49,12 @@ for i in range(len(pf_files)):
 	
 	scriptname = "script%i_%s" % ( i, pf_files[i][:-3])
 	script = open (scriptname, "w")
-
+	script.write("#PBS -M jm8g08@soton.ac.uk\n")
 	if "sciama" in node:
 		script.write("module load mpi/openmpi/1.4.3/gcc-4.4.7\n\n")
 	else:
 		script.write("module load openmpi/1.6.4/intel_of2\n\n")
+
 
 	command = "cd %s\n" % dir
 
