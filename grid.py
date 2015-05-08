@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 import os, sys
 import platform
 import py_plot_util as util 
@@ -70,6 +70,7 @@ for i in it.combinations(indices, nvar):
 			dummy[str(var[i[j]])] = values[i[j]]
 			file_string += "_%s%s" % (short[i[j]],values[i[j]])
 
+		file_string = file_string.replace(".","p")
 		r.write_pf(file_string, dummy)
 
 		print file_string, temp
