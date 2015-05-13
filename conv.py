@@ -14,14 +14,9 @@ for i in range(len(out_files)):
 	
 	c = r.read_convergence(out_files[i])
 
-	print out_files[i], c
+	sig_file = out_files[i][:-3] + ".sig"
 
-
-sig_files = [f for f in os.listdir(path) if f.endswith('.sig')]
-
-for i in range(len(sig_files)):
-
-	f = open(sig_files[i], "r")
+	f = open(sig_file, "r")
 
 	last = "0"
 	for line in f:
@@ -31,4 +26,8 @@ for i in range(len(sig_files)):
 				last = data[8]	
 	f.close()
 
-	print sig_files[i], last
+	print "%s\t%s\t%s" % (sig_file[:-3], c,last)
+
+
+
+
